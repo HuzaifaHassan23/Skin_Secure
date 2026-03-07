@@ -21,7 +21,7 @@ def load_css(file_path):
         st.markdown(f"""<style>{f.read()}</style>""", unsafe_allow_html=True)
 
 #load external CSS
-css_path = pathlib.Path("C:\\Users\\Geo Computer\\OneDrive\\Desktop\\Coding\\python\\Skin_Secure_Streamlit\\style.css")
+css_path = pathlib.Path("style.css")
 load_css(css_path)
 
 # ------------------------
