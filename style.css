@@ -1,0 +1,38 @@
+/* Adjust Sidebar Width */
+[data-testid="stSidebar"] {
+    min-width: 220px !important;
+    max-width: 220px !important;
+    background-color: hsl(18, 66%, 75%) !important;
+}
+
+/* Customizing st.divider() */
+[data-testid="stMain"] hr {
+    border-bottom-color: #ffffff !important; /* Changes the color (using the peach accent here) */
+    border-bottom-width: 2px !important; /* Makes it thicker/thinner */
+    margin-top: 10px !important; /* Adjust space above */
+    margin-bottom: 10px !important; /* Adjust space below */
+}
+
+.footer{
+    text-align: center;
+    background-color: #333;
+    color: #888;
+    display: flex;
+    justify-content: space-between;
+}
+.st-key-login_btn button{
+    background-color: #fc9466;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.st-key-register_btn button{
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
