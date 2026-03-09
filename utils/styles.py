@@ -461,3 +461,399 @@ def apply_reg_styles():
     }
     </style>
     """, unsafe_allow_html=True)
+    
+def apply_dashboard_styles():
+    """Apply custom CSS styling exclusively for the Dashboard page."""
+    st.markdown("""
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    * {
+        font-family: 'Poppins', sans-serif !important;
+    }
+    /* Protect Material Icons */
+    [data-testid="stIconMaterial"] {
+        font-family: 'Material Symbols Rounded' !important;
+    }
+    /* Protect FontAwesome Icons from the global font override */
+    .fas, .fa-solid, .fa, .fab {
+        font-family: "Font Awesome 6 Free" !important;
+        font-weight: 900 !important;
+    }
+    /* Fix container padding */
+    [data-testid="stMain"] .block-container {
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+        max-width: 1200px !important;
+    }
+    /* App Background */
+    .stApp {
+        background-color: #fcebe0;
+    }
+    .section-heading {
+        font-size: 22px !important;
+        color: #333 !important;
+        margin-top: 35px !important;
+        margin-bottom: 15px !important;
+        font-weight: 700 !important;
+    }
+    /* Welcome Section */
+    .welcome-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: white;
+        padding: 30px;
+        border-radius: 16px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        margin-bottom: 20px;
+    }
+    .welcome-text h1 {
+        font-size: 28px !important;
+        color: #333 !important;
+        margin-bottom: 5px !important;
+        font-weight: 700 !important;
+        padding-bottom: 0 !important;
+    }
+    .welcome-text p {
+        font-size: 15px !important;
+        color: #666 !important;
+        margin: 0 !important;
+    }
+    .welcome-date {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #999;
+        font-size: 14px;
+        font-weight: 500;
+    }
+    /* Stats Cards */
+    .stat-card {
+        background: white;
+        padding: 20px;
+        border-radius: 16px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        transition: all 0.3s;
+    }
+    .stat-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    }
+    .stat-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        color: white;
+        flex-shrink: 0;
+    }
+    .stat-icon.blue { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+    .stat-icon.green { background: linear-gradient(135deg, #10b981, #059669); }
+    .stat-icon.orange { background: linear-gradient(135deg, #f59e0b, #d97706); }
+    .stat-icon.purple { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+    .stat-details h3 {
+        font-size: 24px !important;
+        color: #333 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        line-height: 1.2 !important;
+        font-weight: 700 !important;
+    }
+    .stat-details p {
+        font-size: 13px !important;
+        color: #999 !important;
+        font-weight: 500 !important;
+        margin: 0 !important;
+    }
+    /* Quick Actions */
+    .action-card {
+        background: white;
+        padding: 20px;
+        border-radius: 16px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 10px;
+        border: 2px solid transparent;
+    }
+    .action-card.primary { border-color: #ffddbe; }
+    .action-card.secondary { border-color: #e5e7eb; }
+    .action-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #ff9966, #ff7a33);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        color: white;
+        flex-shrink: 0;
+    }
+    .action-content h3 {
+        font-size: 16px !important;
+        color: #333 !important;
+        margin: 0 0 4px 0 !important;
+        padding: 0 !important;
+        font-weight: 600 !important;
+    }
+    .action-content p {
+        font-size: 13px !important;
+        color: #666 !important;
+        margin: 0 !important;
+    }
+    /* Predictions */
+    .prediction-card {
+        background: white;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        border-left: 4px solid #ddd;
+        height: 100%;
+        margin-bottom: 10px;
+    }
+    .prediction-card.high-confidence { border-left-color: #10b981; }
+    .prediction-card.medium-confidence { border-left-color: #f59e0b; }
+    .prediction-card.low-confidence { border-left-color: #ef4444; }
+    .prediction-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 16px;
+        background: #f9fafb;
+    }
+    .prediction-badge {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 600;
+    }
+    .prediction-badge.high { background: #d1fae5; color: #065f46; }
+    .prediction-badge.medium { background: #fef3c7; color: #92400e; }
+    .prediction-badge.low { background: #fee2e2; color: #991b1b; }
+    .prediction-date { font-size: 12px; color: #999; }
+    .prediction-body {
+        padding: 16px;
+    }
+    .prediction-info h3 {
+        font-size: 17px !important;
+        color: #333 !important;
+        margin: 0 0 10px 0 !important;
+        font-weight: 700 !important;
+    }
+    .prediction-info p {
+        font-size: 13px !important;
+        color: #666 !important;
+        margin: 0 0 6px 0 !important;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .prediction-info i {
+        color: #999;
+        width: 14px;
+        text-align: center;
+    }
+    .remedy-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #d1fae5;
+        color: #065f46;
+        padding: 4px 10px;
+        border-radius: 12px;
+        font-size: 11px;
+        font-weight: 600;
+        margin-top: 8px;
+    }
+    /* Tips */
+    .tip-card {
+        background: white;
+        padding: 24px;
+        border-radius: 16px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        text-align: center;
+        height: 100%;
+        transition: all 0.3s;
+    }
+    .tip-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    }
+    .tip-card i {
+        font-size: 32px;
+        color: #ff9966;
+        margin-bottom: 12px;
+    }
+    .tip-card h4 {
+        font-size: 16px !important;
+        color: #333 !important;
+        margin: 0 0 8px 0 !important;
+        font-weight: 600 !important;
+    }
+    .tip-card p {
+        font-size: 13px !important;
+        color: #666 !important;
+        margin: 0 !important;
+        line-height: 1.5 !important;
+    }
+    /* Streamlit Button Overrides */
+    div[data-testid="stButton"] button {
+        background-color: white !important;
+        color: #fc9466 !important;
+        border: 1px solid #fc9466 !important;
+        border-radius: 8px !important;
+        font-weight: 600 !important;
+        transition: all 0.3s ease !important;
+    }
+    div[data-testid="stButton"] button:hover {
+        background-color: #fc9466 !important;
+        color: white !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+def apply_detection_styles():
+    """Apply custom CSS styling exclusively for the Detection page."""
+    st.markdown("""
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    * {
+        font-family: 'Poppins', sans-serif !important;
+    }
+    /* Protect Material Icons */
+    [data-testid="stIconMaterial"] {
+        font-family: 'Material Symbols Rounded' !important;
+    }
+    /* Protect FontAwesome Icons */
+    .fas, .fa-solid, .fa, .fab {
+        font-family: "Font Awesome 6 Free" !important;
+        font-weight: 900 !important;
+    }
+    /* Centered Narrow Container for the Form */
+    [data-testid="stMain"] .block-container {
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+        max-width: 850px !important; 
+    }
+    .stApp {
+        background-color: #fcebe0;
+    }
+    /* Step Header Styling */
+    .step-container {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-top: 10px;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eee;
+    }
+    .step-circle {
+        width: 36px;
+        height: 36px;
+        background: linear-gradient(135deg, #2E6FD8, #1A54B3);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 16px;
+        flex-shrink: 0;
+    }
+    .step-title {
+        font-size: 20px !important;
+        color: #333 !important;
+        font-weight: 700 !important;
+        margin: 0 !important;
+    }
+    /* Upload Guidelines Box */
+    .upload-guidelines {
+        background: #f9fafb;
+        border-radius: 12px;
+        padding: 20px;
+        border-left: 4px solid #ff9966;
+        margin-top: 15px;
+    }
+    .upload-guidelines h4 {
+        font-size: 15px !important;
+        color: #333 !important;
+        margin-bottom: 12px !important;
+        font-weight: 600 !important;
+    }
+    .upload-guidelines ul {
+        list-style: none;
+        padding-left: 0;
+        margin: 0;
+    }
+    .upload-guidelines li {
+        font-size: 13px;
+        color: #555;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    /* Medical Disclaimer Box */
+    .medical-disclaimer {
+        background: #fff3cd;
+        color: #856404;
+        padding: 15px 20px;
+        border-radius: 12px;
+        border-left: 5px solid #ffc107;
+        font-size: 13px;
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    /* Result Box (Dynamically colored via Streamlit logic later) */
+    .result-box {
+        background: white;
+        padding: 25px;
+        border-radius: 16px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        margin-top: 20px;
+        border: 2px solid #eee;
+    }
+    /* Streamlit Uploader & Input Overrides */
+    [data-testid="stFileUploadDropzone"] {
+        background-color: #f8fafc !important;
+        border: 2px dashed #cbd5e1 !important;
+        border-radius: 16px !important;
+        padding: 30px !important;
+    }
+    [data-testid="stFileUploadDropzone"]:hover {
+        border-color: #2E6FD8 !important;
+        background-color: #f0f5ff !important;
+    }
+    /* Analyze Button */
+    .st-key-analyze_btn button {
+        background-color: #fc9466 !important;
+        color: white !important;
+        border-radius: 10px !important;
+        font-weight: 600 !important;
+        padding: 0.8rem !important;
+        border: none !important;
+        width: 100%;
+        font-size: 16px !important;
+        margin-top: 20px !important;
+    }
+    .st-key-analyze_btn button:hover {
+        background-color: #e07a50 !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
