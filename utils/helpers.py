@@ -162,3 +162,34 @@ def get_detection_translation(key: str) -> str:
     }
     lang = st.session_state.get("language", "en")
     return translations.get(lang, translations["en"]).get(key, key)
+
+def get_community_translation(key: str) -> str:
+    """Specific translations for the Community page."""
+    translations = {
+        "en": {
+            "page_title": "Community Forum",
+            "page_desc": "Connect, share experiences, and support each other in a safe space.",
+            "create_btn": "✍️ Create a New Post",
+            "post_title": "Post Title",
+            "post_content": "Share your thoughts or experiences...",
+            "post_anon": "Post Anonymously",
+            "publish_btn": "Publish Post",
+            "recent_posts": "Recent Discussions",
+            "success_msg": "Your post has been published!",
+            "empty_err": "Please fill out both the title and content."
+        },
+        "ur": {
+            "page_title": "کمیونٹی فورم",
+            "page_desc": "ایک محفوظ جگہ پر جڑیں، تجربات شیئر کریں اور ایک دوسرے کا ساتھ دیں۔",
+            "create_btn": "✍️ نئی پوسٹ بنائیں",
+            "post_title": "پوسٹ کا عنوان",
+            "post_content": "اپنے خیالات یا تجربات شیئر کریں...",
+            "post_anon": "گمنام طور پر پوسٹ کریں",
+            "publish_btn": "پوسٹ شائع کریں",
+            "recent_posts": "حالیہ مباحثے",
+            "success_msg": "آپ کی پوسٹ شائع ہو گئی ہے!",
+            "empty_err": "براہ کرم عنوان اور مواد دونوں کو پُر کریں۔"
+        }
+    }
+    lang = st.session_state.get("language", "en")
+    return translations.get(lang, translations["en"]).get(key, key)

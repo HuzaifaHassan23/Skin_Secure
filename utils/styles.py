@@ -857,3 +857,125 @@ def apply_detection_styles():
     }
     </style>
     """, unsafe_allow_html=True)
+
+def apply_community_styles():
+    """Apply custom CSS styling exclusively for the Community page."""
+    st.markdown("""
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    * {
+        font-family: 'Poppins', sans-serif !important;
+    }
+    /* Protect Material Icons */
+    [data-testid="stIconMaterial"] {
+        font-family: 'Material Symbols Rounded' !important;
+    }
+    .fas, .fa-solid, .fa, .fab {
+        font-family: "Font Awesome 6 Free" !important;
+        font-weight: 900 !important;
+    }
+    /* Centered Narrow Container */
+    [data-testid="stMain"] .block-container {
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+        max-width: 900px !important; 
+    }
+    .stApp {
+        background-color: #fcebe0;
+    }
+    /* Post Card Styling */
+    .post-card {
+        background: white;
+        border-radius: 16px;
+        padding: 24px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+        border-left: 4px solid #ff9966;
+        transition: transform 0.2s ease;
+    }
+    .post-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
+    .post-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 15px;
+    }
+    .post-avatar {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #ffddbe, #ffc7a3);
+        color: #d95a1c;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 16px;
+    }
+    .post-author {
+        font-weight: 600;
+        color: #333;
+        font-size: 15px;
+        margin: 0;
+        line-height: 1.2;
+    }
+    .post-date {
+        color: #999;
+        font-size: 12px;
+        margin: 0;
+    }
+    .post-tag {
+        background: #f3f4f6;
+        color: #4b5563;
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 11px;
+        font-weight: 600;
+        margin-left: auto;
+    }
+    
+    .post-title {
+        font-size: 18px !important;
+        font-weight: 700 !important;
+        color: #333 !important;
+        margin: 0 0 10px 0 !important;
+    }
+    .post-content {
+        color: #555 !important;
+        font-size: 14px !important;
+        line-height: 1.6 !important;
+        margin-bottom: 0 !important;
+    }
+    .post-footer {
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px solid #f0f0f0;
+        display: flex;
+        gap: 20px;
+        color: #666;
+        font-size: 13px;
+        font-weight: 500;
+    }
+    .post-footer i {
+        color: #ff9966;
+        margin-right: 5px;
+    }
+    /* Submit Button Override */
+    .st-key-submit_post button {
+        background-color: #fc9466 !important;
+        color: white !important;
+        border-radius: 8px !important;
+        font-weight: 600 !important;
+        padding: 0.5rem !important;
+        border: none !important;
+        width: 100%;
+    }
+    .st-key-submit_post button:hover {
+        background-color: #e07a50 !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
