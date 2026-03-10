@@ -193,3 +193,48 @@ def get_community_translation(key: str) -> str:
     }
     lang = st.session_state.get("language", "en")
     return translations.get(lang, translations["en"]).get(key, key)
+
+def get_profile_translation(key: str) -> str:
+    """Specific translations for the Profile page."""
+    translations = {
+        "en": {
+            "page_title": "My Profile",
+            "page_desc": "Manage your personal information and account settings.",
+            "personal_info": "Personal Information",
+            "update_info_btn": "Update Information",
+            "full_name": "Full Name",
+            "email": "Email Address",
+            "age": "Age",
+            "language": "Preferred Language",
+            "security": "Security & Password",
+            "current_pass": "Current Password",
+            "new_pass": "New Password",
+            "confirm_pass": "Confirm New Password",
+            "update_pass_btn": "Update Password",
+            "success_info": "Personal information updated successfully!",
+            "success_pass": "Password updated successfully!",
+            "err_pass_match": "New passwords do not match!",
+            "err_pass_wrong": "Current password is incorrect."
+        },
+        "ur": {
+            "page_title": "میری پروفائل",
+            "page_desc": "اپنی ذاتی معلومات اور اکاؤنٹ کی ترتیبات کا نظم کریں۔",
+            "personal_info": "ذاتی معلومات",
+            "update_info_btn": "معلومات اپ ڈیٹ کریں",
+            "full_name": "پورا نام",
+            "email": "ای میل ایڈریس",
+            "age": "عمر",
+            "language": "ترجیحی زبان",
+            "security": "سیکیورٹی اور پاس ورڈ",
+            "current_pass": "موجودہ پاس ورڈ",
+            "new_pass": "نیا پاس ورڈ",
+            "confirm_pass": "نئے پاس ورڈ کی تصدیق کریں",
+            "update_pass_btn": "پاس ورڈ اپ ڈیٹ کریں",
+            "success_info": "ذاتی معلومات کامیابی سے اپ ڈیٹ ہو گئیں!",
+            "success_pass": "پاس ورڈ کامیابی سے اپ ڈیٹ ہو گیا!",
+            "err_pass_match": "نئے پاس ورڈ آپس میں نہیں ملتے!",
+            "err_pass_wrong": "موجودہ پاس ورڈ غلط ہے۔"
+        }
+    }
+    lang = st.session_state.get("language", "en")
+    return translations.get(lang, translations["en"]).get(key, key)

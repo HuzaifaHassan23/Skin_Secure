@@ -979,3 +979,104 @@ def apply_community_styles():
     }
     </style>
     """, unsafe_allow_html=True)
+
+def apply_profile_styles():
+    """Apply custom CSS styling exclusively for the Profile page."""
+    st.markdown("""
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    * {
+        font-family: 'Poppins', sans-serif !important;
+    }
+    /* Protect Material Icons */
+    [data-testid="stIconMaterial"] {
+        font-family: 'Material Symbols Rounded' !important;
+    }
+    .fas, .fa-solid, .fa, .fab {
+        font-family: "Font Awesome 6 Free" !important;
+        font-weight: 900 !important;
+    }
+    /* Centered Narrow Container */
+    [data-testid="stMain"] .block-container {
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+        max-width: 850px !important; 
+    }
+    .stApp {
+        background-color: #fcebe0;
+    }
+    /* Profile Header Card */
+    .profile-header-card {
+        background: white;
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 30px;
+        border-left: 4px solid #2E6FD8;
+    }
+    .profile-avatar-large {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #2E6FD8, #1A54B3);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 32px;
+        box-shadow: 0 4px 10px rgba(46, 111, 216, 0.3);
+    }
+    .profile-header-info h2 {
+        margin: 0 !important;
+        color: #333 !important;
+        font-weight: 700 !important;
+        font-size: 24px !important;
+    }
+    .profile-header-info p {
+        margin: 5px 0 0 0 !important;
+        color: #666 !important;
+        font-size: 15px !important;
+    }
+    /* Section Cards */
+    .profile-section-card {
+        background: white;
+        border-radius: 16px;
+        padding: 25px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+        margin-bottom: 20px;
+    }
+    .section-title {
+        font-size: 18px !important;
+        font-weight: 600 !important;
+        color: #333 !important;
+        margin-bottom: 20px !important;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 10px;
+    }
+    .section-title i {
+        color: #ff9966;
+    }
+    /* Form Buttons */
+    div[data-testid="stFormSubmitButton"] button {
+        background-color: #fc9466 !important;
+        color: white !important;
+        border-radius: 8px !important;
+        font-weight: 600 !important;
+        padding: 0.6rem !important;
+        border: none !important;
+        width: 100%;
+        margin-top: 10px;
+    }
+    div[data-testid="stFormSubmitButton"] button:hover {
+        background-color: #e07a50 !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
