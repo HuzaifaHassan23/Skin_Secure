@@ -21,7 +21,9 @@ def load_css(file_path):
         st.markdown(f"""<style>{f.read()}</style>""", unsafe_allow_html=True)
 
 #load external CSS
-css_path = pathlib.Path("style.css")
+
+BASE_DIR = pathlib.Path(__file__).parent
+css_path = BASE_DIR/"style.css"
 load_css(css_path)
 
 # ------------------------
@@ -35,7 +37,7 @@ init_session_state()
 # ------------------------
 
 if st.session_state.is_logged_in:
-    st.sidebar.image("assets/logo.PNG", width=150)
+    st.sidebar.image(f"{BASE_DIR}/assets/logo.PNG", width=150)
     st.sidebar.write(f"👤 {st.session_state.user_name}")
     st.sidebar.divider()
 
@@ -83,7 +85,7 @@ if st.session_state.is_logged_in:
         st.rerun() # Refresh page immediately to apply language
     # -------------------------------
 else:
-    st.sidebar.image("assets/logo.PNG", width=150)
+    st.sidebar.image(f"{BASE_DIR}/assets/logo.PNG", width=150)
     st.sidebar.write("Some heading")
     st.sidebar.divider()
     if st.sidebar.button(" Sign In  ", key="login_btn"):
@@ -130,10 +132,10 @@ def show():
                 return base64.b64encode(f.read()).decode()
         return ""
 
-    cap_img = get_base64("assets/capture.png")
-    sym_img = get_base64("assets/symptoms.png")
-    res_img = get_base64("assets/result.png")
-    demo_webp_b64 = get_base64("assets/demo.webp")
+    cap_img = get_base64(f"{BASE_DIR}/assets/capture.png")
+    sym_img = get_base64(f"{BASE_DIR}/assets/symptoms.png")
+    res_img = get_base64(f"{BASE_DIR}/assets/result.png")
+    demo_webp_b64 = get_base64(f"{BASE_DIR}/assets/demo.webp")
         
 
     # ========================= HERO SECTION =========================
