@@ -5,7 +5,7 @@ import base64
 import os
 import textwrap
 from utils.helpers import init_session_state, get_translation, COLORS, display_footer
-from pages_logic import dashboard, detection, community, profile, login, register
+from pages_logic import dashboard, detection, community, profile, login, register, results
 from utils.styles import apply_index_styles
 
 # Page config
@@ -289,6 +289,9 @@ elif st.session_state.current_page == "community":
 
 elif st.session_state.current_page == "profile":
     profile.show()
+
+elif st.session_state.current_page == "results": 
+    results.show()
 
 elif st.session_state.current_page == "Index":
     show()

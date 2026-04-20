@@ -1080,3 +1080,82 @@ def apply_profile_styles():
     }
     </style>
     """, unsafe_allow_html=True)
+
+def apply_results_styles():
+    """Apply custom CSS styling exclusively for the Results page."""
+    st.markdown("""<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    
+    * { font-family: 'Poppins', sans-serif !important; }
+    .fas, .fa-solid, .fa, .fab { font-family: "Font Awesome 6 Free" !important; font-weight: 900 !important; }
+    
+    [data-testid="stMain"] .block-container {
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+        max-width: 1000px !important; 
+    }
+    .stApp { background-color: #fcebe0; }
+    /* Main Result Banner */
+    .result-banner {
+        border-radius: 16px;
+        padding: 30px;
+        color: white;
+        text-align: center;
+        margin-bottom: 30px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .banner-high { background: linear-gradient(135deg, #ef4444, #dc2626); }
+    .banner-med { background: linear-gradient(135deg, #f59e0b, #d97706); }
+    .banner-low { background: linear-gradient(135deg, #10b981, #059669); }
+    .result-banner h1 { font-size: 32px !important; margin: 10px 0 !important; color: white !important; font-weight: 800 !important; }
+    .severity-badge {
+        background: rgba(255,255,255,0.2);
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 14px;
+        display: inline-block;
+    }
+    /* Content Cards */
+    .info-card {
+        background: white;
+        border-radius: 16px;
+        padding: 25px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+        margin-bottom: 20px;
+        height: 100%;
+    }
+    .card-header {
+        font-size: 18px !important;
+        font-weight: 700 !important;
+        color: #333 !important;
+        margin-bottom: 20px !important;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 10px;
+    }
+    .card-header i { color: #ff9966; }
+    /* Remedy List */
+    .remedy-item {
+        background: #f9fafb;
+        border-left: 4px solid #2E6FD8;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+    }
+    .remedy-item.urgent { border-left-color: #ef4444; background: #fef2f2; }
+    .remedy-item h4 { margin: 0 0 5px 0 !important; color: #333 !important; font-size: 15px !important; font-weight: 600 !important;}
+    .remedy-item p { margin: 0 !important; color: #666 !important; font-size: 13px !important; }
+    /* Buttons */
+    div[data-testid="stButton"] button {
+        border-radius: 8px !important;
+        font-weight: 600 !important;
+        padding: 0.6rem !important;
+        width: 100%;
+    }</style>""", unsafe_allow_html=True)

@@ -238,3 +238,46 @@ def get_profile_translation(key: str) -> str:
     }
     lang = st.session_state.get("language", "en")
     return translations.get(lang, translations["en"]).get(key, key)
+
+def get_results_translation(key: str) -> str:
+    """Specific translations for the Results & Remedy page."""
+    translations = {
+        "en": {
+            "page_title": "Analysis Results",
+            "page_desc": "Your AI-powered preliminary assessment and recommended next steps.",
+            "severity_high": "High Risk",
+            "severity_med": "Medium Risk",
+            "severity_low": "Low Risk",
+            "confidence": "AI Confidence Score",
+            "details_title": "Scan Details",
+            "body_part": "Body Location",
+            "symptoms": "Reported Symptoms",
+            "heatmap_title": "AI Focus Map (Grad-CAM)",
+            "remedy_title": "Recommended Actions & Remedies",
+            "see_doctor": "Seek Professional Medical Advice",
+            "see_doctor_desc": "Based on the assessment, we strongly recommend scheduling an appointment with a dermatologist.",
+            "home_care": "General Home Care (Symptom Relief)",
+            "save_history": "Save to History",
+            "back_detect": "Start New Scan"
+        },
+        "ur": {
+            "page_title": "تجزیہ کے نتائج",
+            "page_desc": "آپ کا AI سے چلنے والا ابتدائی جائزہ اور تجویز کردہ اگلے اقدامات۔",
+            "severity_high": "زیادہ خطرہ",
+            "severity_med": "درمیانہ خطرہ",
+            "severity_low": "کم خطرہ",
+            "confidence": "AI کے اعتماد کا اسکور",
+            "details_title": "اسکین کی تفصیلات",
+            "body_part": "جسم کا مقام",
+            "symptoms": "رپورٹ کردہ علامات",
+            "heatmap_title": "AI فوکس میپ",
+            "remedy_title": "تجویز کردہ اقدامات اور علاج",
+            "see_doctor": "پیشہ ورانہ طبی مشورہ لیں",
+            "see_doctor_desc": "جائزے کی بنیاد پر، ہم ماہر امراض جلد سے ملاقات کا مشورہ دیتے ہیں۔",
+            "home_care": "عام گھریلو دیکھ بھال (علامات سے نجات)",
+            "save_history": "ہسٹری میں محفوظ کریں",
+            "back_detect": "نیا اسکین شروع کریں"
+        }
+    }
+    lang = st.session_state.get("language", "en")
+    return translations.get(lang, translations["en"]).get(key, key)

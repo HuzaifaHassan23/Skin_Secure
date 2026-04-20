@@ -107,7 +107,7 @@ def show():
                     time.sleep(1) # Simulating step 1
                     
                     st.write("⏳ Analyzing features...")
-                    time.sleep(1.5) # Simulating step 2 (Drop AI model logic here)
+                    time.sleep(1.5) # Simulating step 2 
                     
                     st.write("✓ Generating results and heatmap")
                     time.sleep(1)
@@ -119,31 +119,54 @@ def show():
                 confidence = 0.87
                 is_high_risk = True 
 
-                # --- SHOW RESULTS UI ---
-                st.markdown(f"""
-                    <div class="step-container" style="margin-top: 40px;">
-                        <div class="step-circle">3</div>
-                        <h2 class="step-title">{t('results_title')}</h2>
-                    </div>
-                """, unsafe_allow_html=True)
+                # Store results AND set a flag that analysis is done!
+                st.session_state.latest_result = {
+                    "prediction": prediction,
+                    "confidence": confidence,
+                    "risk_level": "high" if is_high_risk else "low", 
+                    "body_part": body_part,
+                    "symptoms": symptoms,
+                    "image": image 
+                }
+                st.session_state.analysis_done = True # <--- THE MAGIC FLAG
+                st.rerun() # Force a rerun to render the results cleanly
 
-                box_color = "#fee2e2" if is_high_risk else "#d1fae5" 
-                text_color = "#991b1b" if is_high_risk else "#065f46" 
-                icon = "⚠️" if is_high_risk else "✅"
+        # ---------------------------------------------------------
+        # SHOW RESULTS UI (OUTSIDE THE ANALYZE BUTTON BLOCK!)
+        # ---------------------------------------------------------
+        if st.session_state.get("analysis_done", False):
+            
+            st.markdown(f"""
+                <div class="step-container" style="margin-top: 40px;">
+                    <div class="step-circle">3</div>
+                    <h2 class="step-title">{t('results_title')}</h2>
+                </div>
+            """, unsafe_allow_html=True)
 
-                st.markdown(f"""
-                    <div class="result-box" style="border-left: 6px solid {text_color}; background-color: {box_color};">
-                        <h3 style="color: {text_color}; margin-top: 0; font-size: 18px;">{icon} Predicted Condition: <b>{prediction}</b></h3>
-                        <p style="color: #555; margin-bottom: 5px; font-size: 14px;">AI Confidence Score:</p>
-                    </div>
-                """, unsafe_allow_html=True)
+            res = st.session_state.latest_result
+            is_high = res["risk_level"] == "high"
+            
+            box_color = "#fee2e2" if is_high else "#d1fae5" 
+            text_color = "#991b1b" if is_high else "#065f46" 
+            icon = "⚠️" if is_high else "✅"
+
+            st.markdown(f"""
+                <div class="result-box" style="border-left: 6px solid {text_color}; background-color: {box_color};">
+                    <h3 style="color: {text_color}; margin-top: 0; font-size: 18px;">{icon} Predicted Condition: <b>{res['prediction']}</b></h3>
+                    <p style="color: #555; margin-bottom: 5px; font-size: 14px;">AI Confidence Score:</p>
+                </div>
+            """, unsafe_allow_html=True)
+            
+            st.progress(res['confidence'], text=f"{int(res['confidence'] * 100)}% Match")
+
+            # Unique key so it doesn't conflict with the Dashboard buttons!
+            if st.button(get_translation("view_details", "en"), key="detection_view_details", use_container_width=True):
+                st.session_state.analysis_done = False # Reset the flag so it's a fresh form next time
+                st.session_state.current_page = "results"
+                st.rerun()
                 
-                st.progress(confidence, text=f"{int(confidence * 100)}% Match")
-
-                if st.button(get_translation("view_details"), key="view_1", use_container_width=True):
-                    st.info("Navigating to details...") # Placeholder logic
-                st.markdown("<br><p style='font-weight: 600; color: #333; font-size: 14px;'>AI Focus Map (Grad-CAM):</p>", unsafe_allow_html=True)
-                st.image(image, caption="Areas the AI focused on", width=300)
+            st.markdown("<br><p style='font-weight: 600; color: #333; font-size: 14px;'>AI Focus Map (Grad-CAM):</p>", unsafe_allow_html=True)
+            st.image(res['image'], caption="Areas the AI focused on", width=300)
 
         # Disclaimer
         st.markdown(f"""
