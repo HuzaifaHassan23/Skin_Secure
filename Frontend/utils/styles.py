@@ -1,5 +1,6 @@
 import streamlit as st
 
+@st.cache_data
 def apply_index_styles():
     """Apply custom CSS styling exclusively for the Index landing page."""
     st.markdown("""
@@ -267,6 +268,7 @@ def login_styles():
     </style>
     """, unsafe_allow_html=True)
 
+@st.cache_data
 def apply_reg_styles():
     """Apply custom CSS styling for the registration page."""
     st.markdown("""
@@ -462,6 +464,7 @@ def apply_reg_styles():
     </style>
     """, unsafe_allow_html=True)
     
+@st.cache_data
 def apply_dashboard_styles():
     """Apply custom CSS styling exclusively for the Dashboard page."""
     st.markdown("""
@@ -724,6 +727,7 @@ def apply_dashboard_styles():
     </style>
     """, unsafe_allow_html=True)
 
+@st.cache_data
 def apply_detection_styles():
     """Apply custom CSS styling exclusively for the Detection page."""
     st.markdown("""
@@ -858,6 +862,7 @@ def apply_detection_styles():
     </style>
     """, unsafe_allow_html=True)
 
+@st.cache_data
 def apply_community_styles():
     """Apply custom CSS styling exclusively for the Community page."""
     st.markdown("""
@@ -980,6 +985,7 @@ def apply_community_styles():
     </style>
     """, unsafe_allow_html=True)
 
+@st.cache_data
 def apply_profile_styles():
     """Apply custom CSS styling exclusively for the Profile page."""
     st.markdown("""
@@ -1081,6 +1087,7 @@ def apply_profile_styles():
     </style>
     """, unsafe_allow_html=True)
 
+@st.cache_data
 def apply_results_styles():
     """Apply custom CSS styling exclusively for the Results page."""
     st.markdown("""<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">

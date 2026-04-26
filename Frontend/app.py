@@ -16,15 +16,16 @@ st.set_page_config(
 )
 
 #load CSS
+@st.cache_data
 def load_css(file_path):
     with open(file_path) as f:
-        st.markdown(f"""<style>{f.read()}</style>""", unsafe_allow_html=True)
+        return f.read()
 
 #load external CSS
 
 BASE_DIR = pathlib.Path(__file__).parent
 css_path = BASE_DIR/"style.css"
-load_css(css_path)
+st.markdown(f"""<style>{load_css(css_path)}</style>""", unsafe_allow_html=True)
 
 # ------------------------
 # Initialize Session State
@@ -36,8 +37,12 @@ init_session_state()
 # Sidebar Navigation
 # ------------------------
 
+@st.cache_data
+def get_logo():
+    return f"{BASE_DIR}/assets/logo.PNG"
+
 if st.session_state.is_logged_in:
-    st.sidebar.image(f"{BASE_DIR}/assets/logo.PNG", width=150)
+    st.sidebar.image(get_logo(), width=150)
     st.sidebar.write(f"👤 {st.session_state.user_name}")
     st.sidebar.divider()
 
@@ -85,8 +90,8 @@ if st.session_state.is_logged_in:
         st.rerun() # Refresh page immediately to apply language
     # -------------------------------
 else:
-    st.sidebar.image(f"{BASE_DIR}/assets/logo.PNG", width=150)
-    st.sidebar.write("Some heading")
+    st.sidebar.image(get_logo(), width=150)
+    st.sidebar.write("Your skin, Protected")
     st.sidebar.divider()
     if st.sidebar.button(" Sign In  ", key="login_btn"):
             st.session_state.current_page = "login"
@@ -122,16 +127,16 @@ else:
 # Page Components
 # ------------------------
 
+@st.cache_data
+def get_base64(path):
+    if os.path.exists(path):
+        with open(path, "rb") as f:
+            return base64.b64encode(f.read()).decode()
+    return ""
+
 def show():
     apply_index_styles()
     
-    # Helper to load images into HTML securely
-    def get_base64(path):
-        if os.path.exists(path):
-            with open(path, "rb") as f:
-                return base64.b64encode(f.read()).decode()
-        return ""
-
     cap_img = get_base64(f"{BASE_DIR}/assets/capture.png")
     sym_img = get_base64(f"{BASE_DIR}/assets/symptoms.png")
     res_img = get_base64(f"{BASE_DIR}/assets/result.png")

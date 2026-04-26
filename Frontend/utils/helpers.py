@@ -13,6 +13,7 @@ COLORS = {
     "text_light": "#666666",
 }
 
+@st.cache_resource
 def init_session_state():
     """Initialize session state variables."""
     if "is_logged_in" not in st.session_state:
@@ -27,6 +28,7 @@ def init_session_state():
         st.session_state.language = "en"
     if "age" not in st.session_state:
         st.session_state.language = None
+@st.cache_data
 def get_translation(key, lang="en"):
     """Get translated text."""
     translations = {
@@ -113,6 +115,7 @@ def display_footer():
     with col3:
         st.caption("Privacy • Contact • About")
         
+@st.cache_data
 def get_detection_translation(key: str) -> str:
     """Specific translations for the Detection page."""
     translations = {
@@ -162,6 +165,7 @@ def get_detection_translation(key: str) -> str:
     lang = st.session_state.get("language", "en")
     return translations.get(lang, translations["en"]).get(key, key)
 
+@st.cache_data
 def get_community_translation(key: str) -> str:
     """Specific translations for the Community page."""
     translations = {
@@ -193,6 +197,7 @@ def get_community_translation(key: str) -> str:
     lang = st.session_state.get("language", "en")
     return translations.get(lang, translations["en"]).get(key, key)
 
+@st.cache_data
 def get_profile_translation(key: str) -> str:
     """Specific translations for the Profile page."""
     translations = {
@@ -238,6 +243,7 @@ def get_profile_translation(key: str) -> str:
     lang = st.session_state.get("language", "en")
     return translations.get(lang, translations["en"]).get(key, key)
 
+@st.cache_data
 def get_results_translation(key: str) -> str:
     """Specific translations for the Results & Remedy page."""
     translations = {
