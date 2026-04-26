@@ -1,5 +1,6 @@
 import streamlit as st
 import textwrap
+import requests
 from utils.helpers import get_translation
 from utils.styles import apply_reg_styles
 
@@ -63,12 +64,38 @@ def show():
 
             if submitted:
                 if name and email and password and password == confirm_password:
-                    st.success("Account created successfully!")
-                    st.session_state.user_name = name
-                    st.session_state.user_email = email
-                    st.session_state.user_password = password
-                    st.session_state.current_page = "login"
-                    st.rerun()
+                    
+                    # Prepare the data to match  FastAPI schemas (UserCreate)
+                    # Map the UI language selection to the integer backend expects
+                    lang_int = 1 if language == "English" else 2
+                    
+                    payload = {
+                        "name": name,
+                        "email": email,
+                        "password": password,
+                        "age": int(age) if age.isdigit() else None,
+                        "preferred_language": lang_int
+                    }
+                    
+                    #  Send the data to FastAPI
+                    try:
+                        response = requests.post("http://127.0.0.1:8000/register", json=payload)
+                        
+                        if response.status_code == 200:
+                            st.success("Account created securely in the database!")
+                            st.session_state.current_page = "login"
+                            st.rerun()
+                        else:
+                            # Try to parse JSON error, fallback to text if not JSON
+                            try:
+                                error_msg = response.json().get("detail", "Registration failed")
+                            except:
+                                error_msg = f"Registration failed (Status {response.status_code}): {response.text}"
+                            st.error(f"⚠️ Error: {error_msg}")
+                            
+                    except requests.exceptions.ConnectionError:
+                        st.error("⚠️ Backend server is not running.")
+                        
                 elif password != confirm_password:
                     st.error("Passwords do not match!")
                 else:

@@ -21,13 +21,12 @@ def init_session_state():
         st.session_state.user_name = None
     if "user_email" not in st.session_state:
         st.session_state.user_email = None
-    if "user_password" not in st.session_state:
-        st.session_state.user_password = None
     if "current_page" not in st.session_state:
         st.session_state.current_page = "Index"
     if "language" not in st.session_state:
         st.session_state.language = "en"
-
+    if "age" not in st.session_state:
+        st.session_state.language = None
 def get_translation(key, lang="en"):
     """Get translated text."""
     translations = {

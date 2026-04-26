@@ -1,3 +1,6 @@
+from urllib import response
+
+import requests
 import streamlit as st
 from utils.helpers import get_translation, COLORS, init_session_state
 from utils.styles import login_styles
@@ -35,17 +38,28 @@ def show():
             submitted = st.form_submit_button(get_translation("login"), key="login_submit", use_container_width=True)
 
             if submitted:
-                if email == "admin@gmail.com" and password == "1234":
-                    st.session_state.is_logged_in = True
-                    st.session_state.user_name = "Admin"
-                    st.session_state.current_page = "dashboard"
-                    st.rerun()
-                elif (email == st.session_state.get("user_email") and password == st.session_state.get("user_password")):
-                    st.session_state.is_logged_in = True
-                    st.session_state.current_page = "dashboard"
-                    st.rerun()
-                else:
-                    st.error("Invalid credentials")
+                payload = {
+                    "email": email,
+                    "password": password
+                }
+                try:
+                    response = requests.post("http://127.0.0.1:8000/login", json=payload)
+                    if response.status_code == 200:
+                        st.session_state.is_logged_in = True
+                        st.session_state.user_email = email
+                        st.session_state.user_name = response.json().get("name")
+                        st.session_state.user_preferred_language = response.json().get("preferred_language")
+                        st.session_state.user_age = response.json().get("age")
+                        st.session_state.current_page = "dashboard"
+                        st.rerun()
+                    else:
+                        try:
+                            error_msg = response.json().get("detail", "Login failed")
+                        except:
+                            error_msg = f"Login failed (Status {response.status_code})"
+                        st.error(f"⚠️ {error_msg}")
+                except requests.exceptions.ConnectionError:
+                    st.error("⚠️ Backend server is not running.")
                     
         # Put the links OUTSIDE the form so they don't trigger form validation
         if st.button(get_translation("create_account"), key="create_account_btn"):
