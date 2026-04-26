@@ -13,7 +13,6 @@ COLORS = {
     "text_light": "#666666",
 }
 
-@st.cache_resource
 def init_session_state():
     """Initialize session state variables."""
     if "is_logged_in" not in st.session_state:
