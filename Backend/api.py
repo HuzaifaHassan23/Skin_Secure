@@ -1,4 +1,5 @@
 import hashlib
+from typing import Annotated
 
 from fastapi import FastAPI, Depends, HTTPException, status
 from sqlalchemy.orm import Session
@@ -28,7 +29,7 @@ def get_password_hash(password: str) -> str:
 
 # Registration Endpoint
 @app.post("/register", response_model=schemas.UserResponse)
-def register_user(user: schemas.UserCreate, db: Session = Depends(database.get_db)):
+def register_user(user: schemas.UserCreate, db: Annotated[Session, Depends(database.get_db)]):
     # Check if a user with this email already exists
     db_user = db.query(models.User).filter(models.User.email == user.email).first()
     if db_user:
@@ -55,7 +56,7 @@ def register_user(user: schemas.UserCreate, db: Session = Depends(database.get_d
 
 # Login Endpoint 
 @app.post("/login")
-async def login_user(credentials: schemas.UserLogin, db: Session = Depends(database.get_db)):  
+async def login_user(credentials: schemas.UserLogin, db: Annotated[Session, Depends(database.get_db)]):  
     # Find the user by email
     db_user = db.query(models.User).filter(models.User.email == credentials.email).first()
     if not db_user:
