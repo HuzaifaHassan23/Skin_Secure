@@ -4,7 +4,7 @@ import pathlib
 import base64
 import os
 import textwrap
-from utils.helpers import init_session_state, get_translation, COLORS, display_footer
+from utils.helpers import init_session_state, get_translation, COLORS
 from pages_logic import dashboard, detection, community, profile, login, register, results
 from utils.styles import apply_index_styles
 

@@ -15,18 +15,21 @@ COLORS = {
 
 def init_session_state():
     """Initialize session state variables."""
+    
     if "is_logged_in" not in st.session_state:
         st.session_state.is_logged_in = False
     if "user_name" not in st.session_state:
         st.session_state.user_name = None
     if "user_email" not in st.session_state:
         st.session_state.user_email = None
+    if "user_password" not in st.session_state:
+        st.session_state.user_password = None
     if "current_page" not in st.session_state:
         st.session_state.current_page = "Index"
     if "language" not in st.session_state:
         st.session_state.language = "en"
     if "age" not in st.session_state:
-        st.session_state.language = None
+        st.session_state.age = None  
 @st.cache_data
 def get_translation(key, lang="en"):
     """Get translated text."""
@@ -96,24 +99,7 @@ def get_translation(key, lang="en"):
     result = translations.get(lang_to_use, {}).get(key, key)
     return str(result) if result else key
 
-    
-def display_header_logo():
-    """Display header with logo and navigation context."""
-    col1, col2, col3 = st.columns([1, 2, 1])
-    with col1:
-        st.write("🏥 **Skin Secure**")
 
-def display_footer():
-    """Display footer."""
-    st.divider()
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.caption("© 2025 Skin Secure")
-    with col2:
-        st.caption("All Rights Reserved")
-    with col3:
-        st.caption("Privacy • Contact • About")
-        
 @st.cache_data
 def get_detection_translation(key: str) -> str:
     """Specific translations for the Detection page."""
