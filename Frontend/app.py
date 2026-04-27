@@ -63,8 +63,14 @@ if st.session_state.is_logged_in:
     st.sidebar.divider()
 
     if st.sidebar.button("🚪 Logout"):
-        st.session_state.clear()
+        # Clear JWT token and authentication state
+        st.session_state.jwt_token = None
+        st.session_state.is_logged_in = False
+        st.session_state.user_name = None
+        st.session_state.user_email = None
+        st.session_state.user_age = None
         st.session_state.current_page = "login"
+        st.success("✅ Logged out successfully!")
         st.rerun()
 
     # --- SIDEBAR LANGUAGE TOGGLE ---

@@ -4,7 +4,9 @@ from utils.styles import apply_results_styles
 from utils.helpers import get_results_translation
 
 def show():
-    if not st.session_state.get("is_logged_in", False):
+    # Check if user has valid token
+    if not st.session_state.get("jwt_token"):
+        st.session_state.is_logged_in = False
         st.session_state.current_page = "login"
         st.rerun()
 

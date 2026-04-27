@@ -5,8 +5,10 @@ from utils.styles import apply_detection_styles
 from utils.helpers import get_detection_translation, get_translation
 
 def show():
-    if not st.session_state.get("is_logged_in", False):
+    # Check if user has valid token
+    if not st.session_state.get("jwt_token"):
         st.warning("Please login first.")
+        st.session_state.is_logged_in = False
         st.session_state.current_page = "login"
         st.rerun()
 

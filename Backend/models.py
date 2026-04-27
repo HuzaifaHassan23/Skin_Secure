@@ -1,51 +1,51 @@
-from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, Enum
-from sqlalchemy.orm import relationship
+from sqlalchemy import String, Integer, Text, DateTime, ForeignKey, Enum
+from sqlalchemy.orm import relationship, Mapped, mapped_column
 from datetime import datetime
 from database import Base
 
 class User(Base):
     __tablename__ = "users"
 
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String(100), nullable=False)
-    email = Column(String(100), unique=True, index=True, nullable=False)
-    age = Column(Integer, nullable=True)
+    # Notice the type hints (Mapped[int], Mapped[str]) before the assignment!
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    name: Mapped[str] = mapped_column(String(100))
+    email: Mapped[str] = mapped_column(String(100), unique=True, index=True)
     
-    # 1 for English, 2 for Urdu
-    preferred_language = Column(Integer, default=1) 
-    hashed_password = Column(String(255), nullable=False)
+    # Use standard Python type hinting for optional/nullable fields
+    age: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    preferred_language: Mapped[int] = mapped_column(default=1) 
+    hashed_password: Mapped[str] = mapped_column(String(255))
 
-    # Relationships
     posts = relationship("Post", back_populates="author")
-
 
 class Post(Base):
     __tablename__ = "posts"
 
-    id = Column(Integer, primary_key=True, index=True)
-    author_id = Column(Integer, ForeignKey("users.id"))
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    author_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
     
-    post_title = Column(String(200), nullable=False)
-    body = Column(Text, nullable=False)
+    post_title: Mapped[str] = mapped_column(String(200))
+    body: Mapped[str] = mapped_column(Text)
     
-    # Restrict to specific post types
-    type_of_post = Column(Enum("Story", "Question", "Advice", name="post_types"), default="Story")
+    type_of_post: Mapped[str] = mapped_column(Enum("Story", "Question", "Advice", name="post_types"), default="Story")
     
-    likes = Column(Integer, default=0)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    # ADD THIS LINE TO SAVE THE ANONYMOUS CHOICE
+    is_anonymous: Mapped[bool] = mapped_column(default=False) 
+    
+    likes: Mapped[int] = mapped_column(default=0)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
-    # Relationships
     author = relationship("User", back_populates="posts")
     comments = relationship("Comment", back_populates="post", cascade="all, delete-orphan")
-
 
 class Comment(Base):
     __tablename__ = "comments"
 
-    id = Column(Integer, primary_key=True, index=True)
-    post_id = Column(Integer, ForeignKey("posts.id"))
-    body = Column(Text, nullable=False)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    post_id: Mapped[int] = mapped_column(ForeignKey("posts.id"))
+    author_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
+    body: Mapped[str] = mapped_column(Text)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
-    # Relationships
     post = relationship("Post", back_populates="comments")
+    author = relationship("User")

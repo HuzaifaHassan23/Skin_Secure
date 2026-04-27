@@ -1,6 +1,6 @@
 """Utility functions for Skin Secure app."""
 import streamlit as st
-from datetime import datetime
+from datetime import datetime, timezone
 
 # Color scheme matching original design
 COLORS = {
@@ -16,21 +16,62 @@ COLORS = {
 def init_session_state():
     """Initialize session state variables."""
     
+    # Authentication
     if "is_logged_in" not in st.session_state:
         st.session_state.is_logged_in = False
+    if "jwt_token" not in st.session_state:
+        st.session_state.jwt_token = None
+    
+    # User info
     if "user_name" not in st.session_state:
         st.session_state.user_name = None
     if "user_email" not in st.session_state:
         st.session_state.user_email = None
-    if "user_password" not in st.session_state:
-        st.session_state.user_password = None
+    if "age" not in st.session_state:
+        st.session_state.age = None
+    
+    # Navigation
     if "current_page" not in st.session_state:
         st.session_state.current_page = "Index"
+    
+    # Settings
     if "language" not in st.session_state:
-        st.session_state.language = "en"
-    if "age" not in st.session_state:
-        st.session_state.age = None  
-@st.cache_data
+        st.session_state.language = "en"  
+
+def format_time_ago(dt: datetime) -> str:
+    """Convert a datetime to relative 'time ago' format.
+    
+    Examples:
+        just now (< 1 minute)
+        5 minutes ago
+        2 hours ago
+        3 days ago
+        2 weeks ago
+    """
+        # Treat naive datetimes from the API/database as UTC.
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+
+    now = datetime.now(timezone.utc)
+    
+    delta = now - dt
+    seconds = int(delta.total_seconds())
+    
+    if seconds < 60:
+        return "just now"
+    elif seconds < 3600:
+        minutes = seconds // 60
+        return f"{minutes} minute{'s' if minutes > 1 else ''} ago"
+    elif seconds < 86400:
+        hours = seconds // 3600
+        return f"{hours} hour{'s' if hours > 1 else ''} ago"
+    elif seconds < 604800:  # 7 days
+        days = seconds // 86400
+        return f"{days} day{'s' if days > 1 else ''} ago"
+    else:
+        weeks = seconds // 604800
+        return f"{weeks} week{'s' if weeks > 1 else ''} ago"
+
 def get_translation(key, lang="en"):
     """Get translated text."""
     translations = {
@@ -95,12 +136,11 @@ def get_translation(key, lang="en"):
             "account_settings": "اکاؤنٹ سیٹنگز",
         }
     }
-    lang_to_use = st.session_state.get("language", "en")
+    lang_to_use = lang or st.session_state.get("language", "en")
     result = translations.get(lang_to_use, {}).get(key, key)
     return str(result) if result else key
 
 
-@st.cache_data
 def get_detection_translation(key: str) -> str:
     """Specific translations for the Detection page."""
     translations = {
@@ -150,7 +190,6 @@ def get_detection_translation(key: str) -> str:
     lang = st.session_state.get("language", "en")
     return translations.get(lang, translations["en"]).get(key, key)
 
-@st.cache_data
 def get_community_translation(key: str) -> str:
     """Specific translations for the Community page."""
     translations = {
@@ -182,7 +221,6 @@ def get_community_translation(key: str) -> str:
     lang = st.session_state.get("language", "en")
     return translations.get(lang, translations["en"]).get(key, key)
 
-@st.cache_data
 def get_profile_translation(key: str) -> str:
     """Specific translations for the Profile page."""
     translations = {
@@ -228,7 +266,6 @@ def get_profile_translation(key: str) -> str:
     lang = st.session_state.get("language", "en")
     return translations.get(lang, translations["en"]).get(key, key)
 
-@st.cache_data
 def get_results_translation(key: str) -> str:
     """Specific translations for the Results & Remedy page."""
     translations = {

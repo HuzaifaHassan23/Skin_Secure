@@ -45,12 +45,20 @@ def show():
                 try:
                     response = requests.post("http://127.0.0.1:8000/login", json=payload)
                     if response.status_code == 200:
+                        data = response.json()
+                        
+                        # Store JWT token (the proof of login)
+                        st.session_state.jwt_token = data["access_token"]
+                        
+                        # Store user info
                         st.session_state.is_logged_in = True
-                        st.session_state.user_email = email
-                        st.session_state.user_name = response.json().get("name")
-                        st.session_state.user_preferred_language = response.json().get("preferred_language")
-                        st.session_state.user_age = response.json().get("age")
+                        st.session_state.user_email = data["user"]["email"]
+                        st.session_state.user_name = data["user"]["name"]
+                        st.session_state.user_age = data["user"]["age"]
+                        st.session_state.language = data["user"]["preferred_language"]
+                        
                         st.session_state.current_page = "dashboard"
+                        st.success("✅ Login successful!")
                         st.rerun()
                     else:
                         try:
