@@ -106,4 +106,17 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     email: Optional[str] = None
-    
+
+class ScanResponse(BaseModel):
+    id: int
+    body_part: str
+    symptoms: str
+    primary_prediction: str
+    confidence: float
+    risk_level: str
+    raw_image_path: str
+    heatmap_path: str
+    created_at: datetime
+
+    class Config:
+        from_attributes = True

@@ -889,6 +889,10 @@ def apply_community_styles():
     .stApp {
         background-color: #fcebe0;
     }
+    /* For text */
+    p, .stMarkdown p, .stText p {
+        color: #4b5563 !important; 
+    }
     /* Post Card Styling */
     .post-card {
         background: white;
@@ -1011,6 +1015,10 @@ def apply_profile_styles():
     }
     .stApp {
         background-color: #fcebe0;
+    }
+    /* For text */
+    p, .stMarkdown p, .stText p {
+        color: #4b5563 !important; 
     }
     /* Profile Header Card */
     .profile-header-card {

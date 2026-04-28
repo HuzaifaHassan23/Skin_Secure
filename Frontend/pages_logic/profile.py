@@ -1,3 +1,5 @@
+from turtle import color
+
 import streamlit as st
 import requests
 from utils.styles import apply_profile_styles

@@ -5,9 +5,9 @@ from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
 from sqlalchemy.orm import Session
 from datetime import datetime
 from pathlib import Path  # <--- Import Pathlib
-
+from typing import List
 # Local imports
-import database, models
+import database, models, schemas
 from Security.dependencies import get_current_user
 from ai.predictor import analyze_skin_image
 from ai.remedies import get_remedy
@@ -24,6 +24,7 @@ HEATMAP_DIR = BASE_DIR / "uploads" / "heatmaps"
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 HEATMAP_DIR.mkdir(parents=True, exist_ok=True)
 
+# Main endpoint to handle analysis
 @router.post("")
 async def run_analysis(
     file: UploadFile = File(...),
@@ -61,7 +62,10 @@ async def run_analysis(
     # 5. Fetch Remedies
     remedy = get_remedy(ai_result["primary_prediction"])
 
-    # 6. Save to MySQL Database
+    # 6. Save RELATIVE paths to MySQL (so the browser can read them!)
+    db_raw_path = f"uploads/raw/{raw_filename}"
+    db_heatmap_path = f"uploads/heatmaps/{heatmap_filename}"
+
     new_scan = models.Scan(
         user_id=current_user["user_id"],
         body_part=body_part,
@@ -69,8 +73,8 @@ async def run_analysis(
         primary_prediction=ai_result["primary_prediction"],
         confidence=ai_result["primary_confidence"],
         risk_level=ai_result["risk_level"],
-        raw_image_path=raw_path,
-        heatmap_path=heatmap_path
+        raw_image_path=db_raw_path,      
+        heatmap_path=db_heatmap_path     
     )
     
     db.add(new_scan)
@@ -88,3 +92,15 @@ async def run_analysis(
         # We send the base64 back directly so Streamlit can display it instantly without fetching it again
         "heatmap_base64": ai_result["heatmap_base64"] 
     }
+
+# New endpoint to fetch user's scan history
+@router.get("/history", response_model=List[schemas.ScanResponse])
+async def get_scan_history(
+    current_user: dict = Depends(get_current_user),
+    db: Session = Depends(database.get_db)
+):
+    scans = db.query(models.Scan)\
+              .filter(models.Scan.user_id == current_user["user_id"])\
+              .order_by(models.Scan.created_at.desc())\
+              .all()
+    return scans

@@ -18,3 +18,7 @@ bin/
 # OS generated files
 .DS_Store
 Thumbs.db
+
+# Images used for testing analysis
+*.png
+*.jpg

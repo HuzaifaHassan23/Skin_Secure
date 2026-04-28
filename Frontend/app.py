@@ -5,7 +5,7 @@ import base64
 import os
 import textwrap
 from utils.helpers import init_session_state, get_translation, COLORS
-from pages_logic import dashboard, detection, community, profile, login, register, results
+from pages_logic import dashboard, detection, community, profile, login, register, results, history
 from utils.styles import apply_index_styles
 
 # Page config
@@ -51,6 +51,9 @@ if st.session_state.is_logged_in:
 
     if st.sidebar.button("🔍 Detection"):
         st.session_state.current_page = "detection"
+    
+    if st.sidebar.button("🕒 History"):
+        st.session_state.current_page = "history"
 
     if st.sidebar.button("👥 Community"):
         st.session_state.current_page = "community"
@@ -303,6 +306,9 @@ elif st.session_state.current_page == "profile":
 
 elif st.session_state.current_page == "results": 
     results.show()
+
+elif st.session_state.current_page == "history":
+    history.show()
 
 elif st.session_state.current_page == "Index":
     show()
