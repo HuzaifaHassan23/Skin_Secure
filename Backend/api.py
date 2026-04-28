@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 
 # Import for CORS (Cross-Origin Resource Sharing) to allow frontend to talk to backend
+from fastapi.middleware.cors import CORSMiddleware  
 from fastapi.staticfiles import StaticFiles 
 import os 
 
@@ -16,6 +17,15 @@ from routers.analysis import router as analysis
 models.Base.metadata.create_all(bind=database.engine)
 
 app = FastAPI(title="Skin Secure API")
+
+# Add CORS middleware to allow requests from the frontend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Set up static file serving for uploaded images
 os.makedirs("uploads", exist_ok=True)

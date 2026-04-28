@@ -5,9 +5,12 @@ import os
 load_dotenv()
 from sqlalchemy import create_engine
 
-DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_URL = os.getenv("DB_URL")
 
-SQLALCHEMY_DATABASE_URL = f"mysql+pymysql://root:{DB_PASSWORD}@localhost/skin_secure"
+if DB_URL is None:
+    raise ValueError("DB_URL environment variable is not set.")
+
+SQLALCHEMY_DATABASE_URL = DB_URL
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
