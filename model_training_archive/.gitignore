@@ -1,0 +1,10 @@
+# Ignore Dataset and Models
+dataset/
+models/
+*.h5
+*.pkl
+*.zip
+*.bin
+# Ignore Python virtual environment
+venv/
+__pycache__/

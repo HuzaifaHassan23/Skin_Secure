@@ -3,6 +3,8 @@ import time
 from PIL import Image
 from utils.styles import apply_detection_styles
 from utils.helpers import get_detection_translation, get_translation
+import requests 
+
 
 def show():
     # Check if user has valid token
@@ -99,76 +101,58 @@ def show():
         # ---------------------------------------------------------
         # STEP 4: ANALYZE BUTTON & LOGIC
         # ---------------------------------------------------------
-        if st.button(t('analyze_btn'), key="analyze_btn"):
-            if body_part == t('body_part_placeholder'):
-                st.error("Please select a body location before analyzing.")
+        submit_btn = st.button(t('analyze_btn'), key="analyze_btn", use_container_width=True)
+
+        if submit_btn:
+            # 1. Validate that they uploaded an image
+            if not uploaded_file:
+                st.error("⚠️ Please upload an image first.")
+            elif body_part == t('body_part_placeholder'):
+                st.error("⚠️ Please select a body location before analyzing.")
             else:
-                # --- NATIVE STREAMLIT LOADING OVERLAY ---
-                with st.status("🤖 AI model processing...", expanded=True) as status:
-                    st.write("✓ Image preprocessed")
-                    time.sleep(1) # Simulating step 1
-                    
-                    st.write("⏳ Analyzing features...")
-                    time.sleep(1.5) # Simulating step 2 
-                    
-                    st.write("✓ Generating results and heatmap")
-                    time.sleep(1)
-                    
-                    status.update(label="Analysis Complete!", state="complete", expanded=False)
-
-                # DUMMY RESULTS
-                prediction = "Melanoma (High Risk)"
-                confidence = 0.87
-                is_high_risk = True 
-
-                # Store results AND set a flag that analysis is done!
-                st.session_state.latest_result = {
-                    "prediction": prediction,
-                    "confidence": confidence,
-                    "risk_level": "high" if is_high_risk else "low", 
-                    "body_part": body_part,
-                    "symptoms": symptoms,
-                    "image": image 
-                }
-                st.session_state.analysis_done = True # <--- THE MAGIC FLAG
-                st.rerun() # Force a rerun to render the results cleanly
-
-        # ---------------------------------------------------------
-        # SHOW RESULTS UI (OUTSIDE THE ANALYZE BUTTON BLOCK!)
-        # ---------------------------------------------------------
-        if st.session_state.get("analysis_done", False):
-            
-            st.markdown(f"""
-                <div class="step-container" style="margin-top: 40px;">
-                    <div class="step-circle">3</div>
-                    <h2 class="step-title">{t('results_title')}</h2>
-                </div>
-            """, unsafe_allow_html=True)
-
-            res = st.session_state.latest_result
-            is_high = res["risk_level"] == "high"
-            
-            box_color = "#fee2e2" if is_high else "#d1fae5" 
-            text_color = "#991b1b" if is_high else "#065f46" 
-            icon = "⚠️" if is_high else "✅"
-
-            st.markdown(f"""
-                <div class="result-box" style="border-left: 6px solid {text_color}; background-color: {box_color};">
-                    <h3 style="color: {text_color}; margin-top: 0; font-size: 18px;">{icon} Predicted Condition: <b>{res['prediction']}</b></h3>
-                    <p style="color: #555; margin-bottom: 5px; font-size: 14px;">AI Confidence Score:</p>
-                </div>
-            """, unsafe_allow_html=True)
-            
-            st.progress(res['confidence'], text=f"{int(res['confidence'] * 100)}% Match")
-
-            # Unique key so it doesn't conflict with the Dashboard buttons!
-            if st.button(get_translation("view_details", "en"), key="detection_view_details", use_container_width=True):
-                st.session_state.analysis_done = False # Reset the flag so it's a fresh form next time
-                st.session_state.current_page = "results"
-                st.rerun()
-                
-            st.markdown("<br><p style='font-weight: 600; color: #333; font-size: 14px;'>AI Focus Map (Grad-CAM):</p>", unsafe_allow_html=True)
-            st.image(res['image'], caption="Areas the AI focused on", width=300)
+                with st.spinner("🤖 AI is analyzing your skin... Please wait..."):
+                    try:
+                        # 2. Prepare the data to send to FastAPI
+                        headers = {"Authorization": f"Bearer {st.session_state.jwt_token}"}
+                        
+                        # Files go in the 'files' parameter for requests
+                        files = {
+                            "file": (uploaded_file.name, uploaded_file.getvalue(), uploaded_file.type)
+                        }
+                        
+                        # Form data goes in the 'data' parameter
+                        payload = {
+                            "body_part": body_part,
+                            "symptoms": ", ".join(symptoms) if symptoms else "None"
+                        }
+                        
+                        # 3. Make the API Call to your new endpoint
+                        response = requests.post(
+                            "http://127.0.0.1:8000/analyze", 
+                            files=files, 
+                            data=payload, 
+                            headers=headers
+                        )
+                        
+                        # 4. Handle the Response
+                        if response.status_code == 200:
+                            # Save the entire JSON response into session state so Results page can see it
+                            st.session_state.latest_result = response.json()
+                            
+                            st.success("Analysis Complete!")
+                            
+                            # Automatically redirect the user to the Results page
+                            st.session_state.current_page = "results"
+                            st.rerun()
+                        else:
+                            # If the backend crashed or returned an error
+                            error_msg = response.json().get("detail", "Analysis failed.")
+                            st.error(f"⚠️ Server Error: {error_msg}")
+                            
+                    except requests.exceptions.ConnectionError:
+                        st.error("⚠️ Backend server is offline. Please start FastAPI.")
+                    except Exception as e:
+                        st.error(f"⚠️ An unexpected error occurred: {str(e)}")
 
         # Disclaimer
         st.markdown(f"""

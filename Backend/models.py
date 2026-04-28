@@ -16,7 +16,9 @@ class User(Base):
     preferred_language: Mapped[int] = mapped_column(default=1) 
     hashed_password: Mapped[str] = mapped_column(String(255))
 
-    posts = relationship("Post", back_populates="author")
+    # Relationships
+    posts = relationship("Post", back_populates="author", cascade="all, delete-orphan")
+    scans = relationship("Scan", back_populates="user", cascade="all, delete-orphan")
 
 class Post(Base):
     __tablename__ = "posts"
@@ -49,3 +51,25 @@ class Comment(Base):
 
     post = relationship("Post", back_populates="comments")
     author = relationship("User")
+
+class Scan(Base):
+    __tablename__ = "scans"
+
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
+    
+    body_part: Mapped[str] = mapped_column(String(100))
+    symptoms: Mapped[str] = mapped_column(Text) # Stored as "Itching, Redness"
+    
+    primary_prediction: Mapped[str] = mapped_column(String(100))
+    confidence: Mapped[float] = mapped_column()
+    risk_level: Mapped[str] = mapped_column(String(20)) # "high", "med", "low"
+    
+    # Store file paths, not the actual images!
+    raw_image_path: Mapped[str] = mapped_column(String(255))
+    heatmap_path: Mapped[str] = mapped_column(String(255))
+    
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+    # Relationship
+    user = relationship("User", back_populates="scans")
