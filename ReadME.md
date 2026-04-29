@@ -33,7 +33,7 @@ Built specifically to bridge the gap between patients and limited dermatological
 # 🚀 Live Demonstration
 
 ## Frontend (Streamlit)
-**skinsecure.streamlit.app**
+**https://skinsecure.streamlit.app**
 
 ## Backend API (FastAPI)
 **https://skin-secure-api-ufhov.ondigitalocean.app/**
