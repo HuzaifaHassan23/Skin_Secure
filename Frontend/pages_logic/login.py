@@ -43,7 +43,7 @@ def show():
                     "password": password
                 }
                 try:
-                    response = requests.post("http://127.0.0.1:8000/login", json=payload)
+                    response = requests.post("https://skin-secure-api-ufhov.ondigitalocean.app/login", json=payload)
                     if response.status_code == 200:
                         data = response.json()
                         

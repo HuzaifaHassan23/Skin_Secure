@@ -91,7 +91,7 @@ def show():
                 try:
                     headers = {"Authorization": f"Bearer {st.session_state.jwt_token}"}
                     response = requests.put(
-                        "http://127.0.0.1:8000/user/profile",
+                        "https://skin-secure-api-ufhov.ondigitalocean.app/user/profile",
                         json=update_payload,
                         headers=headers
                     )
@@ -152,7 +152,7 @@ def show():
                         "new_password": new_pass
                     }
                     response = requests.put(
-                        "http://127.0.0.1:8000/user/password",
+                        "https://skin-secure-api-ufhov.ondigitalocean.app/user/password",
                         json=payload,
                         headers=headers
                     )

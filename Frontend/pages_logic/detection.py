@@ -128,7 +128,7 @@ def show():
                         
                         # 3. Make the API Call to your new endpoint
                         response = requests.post(
-                            "http://127.0.0.1:8000/analyze", 
+                            "https://skin-secure-api-ufhov.ondigitalocean.app/analyze", 
                             files=files, 
                             data=payload, 
                             headers=headers

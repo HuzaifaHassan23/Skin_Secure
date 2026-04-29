@@ -22,7 +22,7 @@ def show():
 
     # ========================= FETCH REAL DATA =========================
     headers = {"Authorization": f"Bearer {st.session_state.jwt_token}"}
-    API_URL = "http://127.0.0.1:8000"
+    API_URL = "https://skin-secure-api-ufhov.ondigitalocean.app"
 
     scans = []
     total_posts = 0

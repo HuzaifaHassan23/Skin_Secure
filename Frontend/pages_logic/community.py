@@ -80,7 +80,7 @@ def show():
                             "is_anonymous": is_anonymous
                         }
                         response = requests.post(
-                            "http://127.0.0.1:8000/posts",
+                            "https://skin-secure-api-ufhov.ondigitalocean.app/posts",
                             json=payload,
                             headers=headers
                         )
@@ -111,7 +111,7 @@ def show():
     # Initialize or refresh posts cache
     if "posts" not in st.session_state or st.session_state.get("community_refresh", False):
         try:
-            response = requests.get("http://127.0.0.1:8000/posts")
+            response = requests.get("https://skin-secure-api-ufhov.ondigitalocean.app/posts")
             if response.status_code == 200:
                 posts_data = response.json()
                 st.session_state.posts = posts_data
@@ -164,7 +164,7 @@ def show():
                     try:
                         headers = {"Authorization": f"Bearer {st.session_state.jwt_token}"}
                         response = requests.post(
-                            f"http://127.0.0.1:8000/posts/{post['id']}/like",
+                            f"https://skin-secure-api-ufhov.ondigitalocean.app/posts/{post['id']}/like",
                             headers=headers
                         )
                         if response.status_code == 200:
@@ -185,7 +185,7 @@ def show():
                 
                 # Fetch full post with comments
                 try:
-                    response = requests.get(f"http://127.0.0.1:8000/posts/{post['id']}")
+                    response = requests.get(f"https://skin-secure-api-ufhov.ondigitalocean.app/posts/{post['id']}")
                     if response.status_code == 200:
                         post_detail = response.json()
                         
@@ -211,7 +211,7 @@ def show():
                                         headers = {"Authorization": f"Bearer {st.session_state.jwt_token}"}
                                         payload = {"body": comment_text}
                                         response = requests.post(
-                                            f"http://127.0.0.1:8000/posts/{post['id']}/comments",
+                                            f"https://skin-secure-api-ufhov.ondigitalocean.app/posts/{post['id']}/comments",
                                             json=payload,
                                             headers=headers
                                         )

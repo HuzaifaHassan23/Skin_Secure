@@ -13,7 +13,7 @@ def show():
     headers = {"Authorization": f"Bearer {st.session_state.jwt_token}"}
     
     try:
-        response = requests.get("http://127.0.0.1:8000/analyze/history", headers=headers)
+        response = requests.get("https://skin-secure-api-ufhov.ondigitalocean.app/analyze/history", headers=headers)
         if response.status_code == 200:
             scans = response.json()
             
@@ -29,7 +29,7 @@ def show():
                     c1, c2 = st.columns([1, 3])
                     with c1:
                         # Fetch the image directly from FastAPI!
-                        st.image(f"http://127.0.0.1:8000/{scan['heatmap_path']}", use_container_width=True)
+                        st.image(f"https://skin-secure-api-ufhov.ondigitalocean.app/{scan['heatmap_path']}", use_container_width=True)
                     with c2:
                         dt = datetime.fromisoformat(scan['created_at'].replace('Z', '+00:00'))
                         st.write(f"**Date:** {dt.strftime('%B %d, %Y - %I:%M %p')}")

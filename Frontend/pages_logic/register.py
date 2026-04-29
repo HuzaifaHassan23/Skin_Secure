@@ -79,7 +79,7 @@ def show():
                     
                     #  Send the data to FastAPI
                     try:
-                        response = requests.post("http://127.0.0.1:8000/register", json=payload)
+                        response = requests.post("https://skin-secure-api-ufhov.ondigitalocean.app/register", json=payload)
                         
                         if response.status_code == 200:
                             st.success("Account created securely in the database!")
