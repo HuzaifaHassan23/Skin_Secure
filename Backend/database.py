@@ -5,12 +5,12 @@ import os
 load_dotenv()
 from sqlalchemy import create_engine
 
-DB_URL = os.getenv("DB_URL")
+DATABASE_URL = os.getenv("DATABASE_URL")
 
-if DB_URL is None:
-    raise ValueError("DB_URL environment variable is not set.")
+if DATABASE_URL is None:
+    raise ValueError("DATABASE_URL environment variable is not set.")
 
-SQLALCHEMY_DATABASE_URL = DB_URL
+SQLALCHEMY_DATABASE_URL = DATABASE_URL
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
