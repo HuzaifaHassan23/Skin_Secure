@@ -1,83 +1,194 @@
-# Skin Secure Streamlit
+# 🛡️ Skin Secure: AI-Powered Dermatological Analysis
 
-A Streamlit-based application for skin health analysis and security.
+**Skin Secure** is a comprehensive full-stack healthcare application designed to provide accessible, AI-driven skin health assessments.
 
-## Overview
+This project combines advanced **Deep Learning (ResNet50)** with a modern web architecture to offer:
 
-Skin Secure is a web application built with Streamlit that provides tools for analyzing and monitoring skin health. The application offers an intuitive interface for users to assess and track skin conditions with secure data handling.
+- Real-time skin disease analysis
+- Symptom tracking
+- Explainable AI (Grad-CAM Heatmaps)
+- Community-driven support system
+- Secure authentication and user history tracking
 
-## Features
+Built specifically to bridge the gap between patients and limited dermatological resources, especially in the Pakistani healthcare context.
 
-- **Skin Analysis**: Analyze images and receive insights about skin health
-- **Secure Storage**: Protects user data with security best practices
-- **Interactive Interface**: User-friendly Streamlit dashboard
-- **Real-time Processing**: Fast image processing and analysis
+---
 
-## Installation
+# 🎓 University Project Details
 
-### Prerequisites
-- Python 3.8 or higher
-- pip package manager
+## Institution
+**University of Gujrat**
 
-### Setup
+## Team Members
+- Huzaifa
+- Sehrish
+- Zaineb
+- Ayesha
 
-1. Clone the repository:
+## Project Type
+**Final Year Project (FYP)**
+
+---
+
+# 🚀 Live Demonstration
+
+## Frontend (Streamlit)
+**skinsecure.streamlit.app**
+
+## Backend API (FastAPI)
+**https://skin-secure-api-ufhov.ondigitalocean.app/**
+
+---
+
+# 🛠️ Tech Stack & Architecture
+
+This project follows a professional decoupled architecture, ensuring scalability, maintainability, and security across three distinct layers.
+
+## 1. Frontend (The User Experience)
+
+### Streamlit
+Used for:
+- Interactive dashboard
+- Real-time UI updates
+- User authentication pages
+- Detection workflow
+- Community features
+- Profile management
+
+### Custom CSS
+Implemented for:
+- Professional UI/UX
+- Dark-grey readability theme
+- Responsive layout
+- Modern healthcare branding
+- Smooth visual consistency
+
+## 2. Backend (The Engine)
+
+### FastAPI
+Used for:
+- Handling API requests
+- Authentication endpoints
+- AI model inference
+- Community CRUD operations
+- User profile management
+
+### TensorFlow
+Used to power the ResNet50 Deep Learning Model for:
+- Skin disease classification
+- Medical image analysis
+- Confidence score generation
+
+### Git LFS
+Used for managing and deploying:
+- Large AI model files
+- High-capacity assets (>200MB)
+
+## 3. Database & Security (The Vault)
+
+### Aiven MySQL
+Used for storing:
+- User profiles
+- Scan history
+- Community posts
+- Comments
+- Likes
+- Medical detection logs
+
+### JWT (JSON Web Tokens)
+Used for:
+- Secure login sessions
+- Stateless authentication
+- Protected backend routes
+- Session persistence
+
+### PyMySQL
+Used as the secure connector between FastAPI and Cloud MySQL Database.
+
+---
+
+# ✨ Key Features
+
+## 🔍 AI Skin Analysis
+Upload skin images for real-time classification across multiple dermatological conditions.
+
+## 🔥 Explainable AI (Grad-CAM)
+Generates heatmaps showing exactly which areas influenced the AI’s decision.
+
+## 📈 User Scan History
+Track previous assessments and monitor skin changes over time.
+
+## 👥 Community Hub
+Users can share experiences, ask questions, and support others anonymously.
+
+## 🔐 Secure Authentication
+Professional-grade login system with encrypted password handling and JWT authentication.
+
+---
+
+# 💻 Local Setup
+
+## Prerequisites
+
+- Python 3.11.x
+- MySQL Server (Local or Cloud)
+- Git
+- Git LFS
+
+## Installation Steps
+
+### 1. Clone the Repository
+
 ```bash
-git clone <repository-url>
-cd Skin_Secure_Streamlit
+git clone https://github.com/HuzaifaHassan23/Skin_Secure
+cd Skin_Secure
 ```
 
-2. Create a virtual environment:
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+### 2. Environment Configuration
+
+Create a `.env` file inside the `Backend/` folder:
+
+```toml
+DATABASE_URL=mysql+pymysql://user:pass@localhost:3306/skin_secure
+SECRET_KEY=your_secret_key_here
 ```
 
-3. Install dependencies:
+### 3. Install Dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
 
-## Usage
+### 4. Run the Servers
 
-Run the application:
+### Terminal 1 — Backend
+
 ```bash
+cd Backend
+uvicorn api:app --reload
+```
+
+### Terminal 2 — Frontend
+
+```bash
+cd Frontend
 streamlit run app.py
 ```
 
-The application will open in your default web browser at `http://localhost:8501`
+---
 
-## Project Structure
+# 📸 Screenshots
 
-```
-Skin_Secure_Streamlit/
-├── app.py                 # Main Streamlit application
-├── requirements.txt       # Project dependencies
-├── ReadME.md             # This file
-└── [other project files]
-```
+<img width="1706" height="878" alt="dash" src="https://github.com/user-attachments/assets/7d6a52cc-7c05-4353-9916-e09741d01dd9" />
+<img width="1706" height="878" alt="dash" src="https://github.com/user-attachments/assets/b583231a-8c40-480a-b79a-4542907e7d6c" />
+<img width="1665" height="862" alt="result" src="https://github.com/user-attachments/assets/8e718852-e5e4-4560-b02e-a220d8f386e6" />
+<img width="1630" height="866" alt="com" src="https://github.com/user-attachments/assets/d61db437-7e39-4495-8fd3-0114e74afcd3" />
+<img width="1585" height="862" alt="prof" src="https://github.com/user-attachments/assets/455d6bf5-4e6d-4705-b86d-ddb048d75e18" />
 
-## Technologies Used
+---
 
-- **Streamlit**: Web application framework
-- **Python**: Programming language
-- **[Add other libraries as needed]**
+# 📝 License
 
-## Security
+This project is developed as part of the academic curriculum at the University of Gujrat.
 
-This application implements security measures to protect user data. All sensitive information is handled securely and not stored without explicit consent.
-
-## Contributing
-
-Contributions are welcome! Please follow these steps:
-1. Create a new branch for your feature
-2. Make your changes
-3. Submit a pull request with a clear description of your changes.
-
-## Support
-
-For issues or questions, please open an issue on the repository or contact the development team.
-
-## Author
-
-Created by Sehrish, Zaineb, Ayesha, Huzaifa University of Gujrat
+All rights reserved by the project authors.
