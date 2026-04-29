@@ -55,7 +55,10 @@ def show():
                         st.session_state.user_email = data["user"]["email"]
                         st.session_state.user_name = data["user"]["name"]
                         st.session_state.user_age = data["user"]["age"]
-                        st.session_state.language = data["user"]["preferred_language"]
+                        
+                        # Fix integer-to-string mapping for language (1 = English, 2 = Urdu)
+                        pref_lang = data["user"]["preferred_language"]
+                        st.session_state.language = "en" if pref_lang == 1 else "ur"
                         
                         st.session_state.current_page = "dashboard"
                         st.success("✅ Login successful!")

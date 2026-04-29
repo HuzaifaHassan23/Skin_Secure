@@ -21,10 +21,10 @@ app = FastAPI(title="Skin Secure API")
 # Add CORS middleware to allow requests from the frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  
+    allow_origins=["skinsecure.streamlit.app"],  
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["skinsecure.streamlit.app"],
+    allow_headers=["skinsecure.streamlit.app"],
 )
 
 # Set up static file serving for uploaded images
