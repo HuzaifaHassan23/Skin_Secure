@@ -179,7 +179,7 @@ streamlit run app.py
 
 # 📸 Screenshots
 
-<img width="1706" height="878" alt="dash" src="https://github.com/user-attachments/assets/7d6a52cc-7c05-4353-9916-e09741d01dd9" />
+<img width="1582" height="872" alt="main" src="https://github.com/user-attachments/assets/e096ceca-df1b-4b72-8c0c-91fe17146048" />
 <img width="1706" height="878" alt="dash" src="https://github.com/user-attachments/assets/b583231a-8c40-480a-b79a-4542907e7d6c" />
 <img width="1665" height="862" alt="result" src="https://github.com/user-attachments/assets/8e718852-e5e4-4560-b02e-a220d8f386e6" />
 <img width="1630" height="866" alt="com" src="https://github.com/user-attachments/assets/d61db437-7e39-4495-8fd3-0114e74afcd3" />
