@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from sqlalchemy import text
 
 # Import for CORS (Cross-Origin Resource Sharing) to allow frontend to talk to backend
 from fastapi.middleware.cors import CORSMiddleware  
@@ -36,3 +37,11 @@ app.include_router(auth_router)
 app.include_router(users_router)
 app.include_router(posts_router)
 app.include_router(analysis)
+
+# Health check endpoint to keep Aiven database awake
+@app.get("/keep-alive")
+def keep_alive():
+    # This forces the app to ping the Aiven database
+    with database.engine.connect() as conn:
+        conn.execute(text("SELECT 1"))
+    return {"status": "Database is awake!"}
